@@ -1,0 +1,47 @@
++---------------------+      +----------------------+      +-------------------------+
+| Exchange Feeds      | ---> | DataSources (adapters)| --->| Ingestor (lightweight)  |
+| (trades, quotes,    |      | (per-exchange)       |      | - validate/envelope     |
+|  L2 updates, snaps) |      +----------------------+      | - convert -> MarketEvent|
++---------------------+                                    | - publish to Stream     |
+                                                           +-----------+-------------+
+                                                                         |
+                                                                         v
+                                                    +-------------------------------------+
+                                                    | Streaming Bus (Kafka / NATS / RS)   |
+                                                    | - topics partitioned by symbol      |
+                                                    | - retention for backtest / replay   |
+                                                    +-------------------------------------+
+                                                     |         |           |          |
+             +---------------------------------------+         |           |          +----------------------------------+
+             |                                                 |           |                                             |
+             v                                                 v           v                                             v
++---------------------------+    +---------------------------+  +---------------------------+    +----------------------------+
+| OrderBook Processor       |    | OrderFlow / Tape Engine   |  | Footprint / Bar Builder   |    | VolumeProfile Processor    |
+| - consumes orderbook.*    |    | - consumes trades.*       |  | - consumes trades + quotes|    | - consumes trades.*        |
+| - keeps in-memory state   |    | - detect sweeps, iceberg  |  | - produce footprint bars  |    | - compute POC / VA / VAL   |
+| - emit events (absorpt.)  |    | - produce analytics events|  | - publish analytics.*     |    | - publish analytics.*      |
++---------------------------+    +---------------------------+  +---------------------------+    +----------------------------+
+             |                               |                          |                                  |
+             +----------------+--------------+--------------------------+----------------------------------+
+                              |
+                              v
+                    +-------------------------+
+                    | Batch Writers / Storage |
+                    | - Batching per data type|
+                    | - ClickHouse / Timescale|
+                    | - Object Storage (S3)   |
+                    | - ArcticDB for archive  |
+                    +-----------+-------------+
+                                |
+                                v
+                     +-------------------------------+
+                     | API / Query Layer             |
+                     | - REST / gRPC / WebSocket     |
+                     | - Dashboards (Grafana / UI)   |
+                     | - Replay / Backtest Service   |
+                     +-------------------------------+
+                                |
+                                v
+                     +-------------------------------+
+                     | Consumers / UI / Algos / CLI  |
+                     +-------------------------------+
