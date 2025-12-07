@@ -9,11 +9,11 @@ import (
 	"os/signal"
 	"syscall"
 
-	"trading-system/src/config"
-	"trading-system/src/grpc_control"
-	"trading-system/src/ingestor"
-	"trading-system/src/logger"
-	"trading-system/src/rest"
+	"data-ingestor/src/config"
+	"data-ingestor/src/grpc_control"
+	"data-ingestor/src/ingestor"
+	"data-ingestor/src/logger"
+	"data-ingestor/src/rest"
 )
 
 func main() {
