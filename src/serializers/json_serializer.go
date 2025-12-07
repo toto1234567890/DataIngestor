@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"trading-system/src/interfaces"
+	"data-ingestor/src/interfaces"
 )
 
 // -----------------------------------------------------------------------------
@@ -39,3 +39,4 @@ func (j *JSONSerializer) Unmarshal(data []byte, obj any) error {
 	}
 	return nil
 }
+
