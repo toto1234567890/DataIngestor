@@ -9,9 +9,9 @@ import (
 	"syscall"
 	"time"
 
-	"trading-system/src/config"
-	"trading-system/src/ingestor"
-	"trading-system/src/logger"
+	"data-ingestor/src/config"
+	"data-ingestor/src/ingestor"
+	"data-ingestor/src/logger"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/health"
