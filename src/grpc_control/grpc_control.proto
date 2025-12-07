@@ -1,0 +1,166 @@
+syntax = "proto3";
+
+package grpc_control;
+
+option go_package = "src/grpc_control";
+
+
+// -----------------------------------------------------------------------------
+// Control Service Definition
+// -----------------------------------------------------------------------------
+
+service ControlService {
+    // Data Source Management
+    rpc AddDataSource(AddDataSourceRequest) returns (ControlResponse);
+    rpc RemoveDataSource(RemoveDataSourceRequest) returns (ControlResponse);
+    
+    // Broker Management
+    rpc StartBroker(StartBrokerRequest) returns (ControlResponse);
+    rpc StopBroker(StopBrokerRequest) returns (ControlResponse);
+    rpc ListBrokers(ListBrokersRequest) returns (ListBrokersResponse);
+    
+    // Symbol Management
+    rpc AddSymbols(AddSymbolsRequest) returns (ControlResponse);
+    rpc AddSymbolsAll(AddSymbolsAllRequest) returns (ControlResponse);
+    rpc RemoveSymbols(RemoveSymbolsRequest) returns (ControlResponse);
+    rpc RemoveSymbolsAll(RemoveSymbolsAllRequest) returns (ControlResponse);
+
+    // Broker Status    
+    rpc GetBrokerStatus(GetBrokerStatusRequest) returns (BrokerStatusResponse);
+    
+    // Health Check
+    rpc HealthCheck(HealthCheckRequest) returns (HealthCheckResponse);
+}
+
+// -----------------------------------------------------------------------------
+// Common Messages
+// -----------------------------------------------------------------------------
+
+message ControlResponse {
+    bool success = 1;
+    string message = 2;
+    int64 timestamp = 3;
+    string error_code = 4;
+}
+
+// -----------------------------------------------------------------------------
+// Data Source Management
+// -----------------------------------------------------------------------------
+
+message AddDataSourceRequest {
+    string source_name = 1;
+    string source_type = 2;
+    repeated string symbols = 3;
+    string api_key = 4;
+    string endpoint = 5;
+}
+
+message RemoveDataSourceRequest {
+    string source_name = 1;
+}
+
+message ModifyDataSourceRequest {
+    string source_name = 1;
+    string source_type = 2;
+    repeated string symbols = 3;
+    string api_key = 4;
+    string endpoint = 5;
+}
+
+// -----------------------------------------------------------------------------
+// Broker Management
+// -----------------------------------------------------------------------------
+
+message StartBrokerRequest {
+    string broker_name = 1;
+    string broker_type = 2;
+    repeated string symbols = 3;
+    string api_key = 4;
+    string endpoint = 5;
+}
+
+message StopBrokerRequest {
+    string broker_name = 1;
+}
+
+message GetBrokerStatusRequest {
+    string broker_name = 1;
+}
+
+message BrokerStatusResponse {
+    string broker_name = 1;
+    bool running = 2;
+    repeated string symbols = 3;
+    string broker_type = 4;
+    string status_message = 5;
+    string api_key = 6;
+    string endpoint = 7;
+}
+
+message BrokerInfo {
+    string broker_name = 1;
+    string broker_type = 2;
+    string endpoint = 3;
+    bool running = 4;
+    repeated string symbols = 5;
+    string status = 6;
+}
+
+message ListBrokersRequest {
+    bool include_available = 1;
+}
+
+message ListBrokersResponse {
+    repeated BrokerInfo running_brokers = 1;
+    repeated BrokerInfo available_brokers = 2;
+    int32 total_running = 3;
+    int32 total_available = 4;
+    int64 timestamp = 5;
+}
+
+message AvailableBrokersRequest {
+}
+
+message AvailableBrokersResponse {
+    repeated BrokerInfo available_brokers = 1;
+    int32 total_count = 2;
+    int64 timestamp = 3;
+}
+
+// -----------------------------------------------------------------------------
+// Symbol Management
+// -----------------------------------------------------------------------------
+
+message AddSymbolsRequest {
+    string broker_name = 1;
+    repeated string symbols = 2;
+}
+
+message AddSymbolsAllRequest {
+    repeated string symbols = 1;
+}
+
+message RemoveSymbolsRequest {
+    string broker_name = 1;
+    repeated string symbols = 2;
+}
+
+message RemoveSymbolsAllRequest {
+    repeated string symbols = 1;
+}
+
+// -----------------------------------------------------------------------------
+// Health Check
+// -----------------------------------------------------------------------------
+
+message HealthCheckRequest {
+    string service_name = 1;
+}
+
+message HealthCheckResponse {
+    bool healthy = 1;
+    string status = 2;
+    string version = 3;
+    int64 timestamp = 4;
+    map<string, string> details = 5;
+}
