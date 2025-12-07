@@ -5,13 +5,13 @@ import (
 	"fmt"
 	"sync"
 
-	"trading-system/src/config"
-	"trading-system/src/factories"
-	"trading-system/src/interfaces"
-	"trading-system/src/logger"
-	"trading-system/src/models"
-	"trading-system/src/publishers"
-	"trading-system/src/serializers"
+	"data-ingestor/src/config"
+	"data-ingestor/src/factories"
+	"data-ingestor/src/interfaces"
+	"data-ingestor/src/logger"
+	"data-ingestor/src/models"
+	"data-ingestor/src/publishers"
+	"data-ingestor/src/serializers"
 )
 
 // -----------------------------------------------------------------------------
