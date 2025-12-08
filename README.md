@@ -123,7 +123,6 @@ text
     
 *   NATS Server with JetStream enabled
     
-*   Binance API access (for crypto data)
     
 
 ### Installation
@@ -227,7 +226,6 @@ Currently supported:
 *   Extensible via IBroker interface
 
 
-    
 
 🔧 API Reference
 ----------------
@@ -284,6 +282,7 @@ go
 type MyBroker struct {
       // Broker implementation
 }
+
 func (b *MyBroker) ParseMessage(message []byte) (*models.MMarketData, error) {
   // Parse exchange-specific messages
 }
@@ -365,7 +364,7 @@ marketdata.{data_type}.{symbol}
 Examples:
   marketdata.TRADE.BTCUSDT
   marketdata.QUOTE.ETHUSDT
-   marketdata.ORDERBOOK.ADAUSDT
+  marketdata.ORDERBOOK.ADAUSDT
 ```
 
 🛠️ Development
@@ -377,10 +376,13 @@ bash
 
 ```   
 # Install dependencies  go mod download
+
 # Run tests
 go test ./...
+
 # Build
 go build -o data-ingestor ./src/main.go
+
 # Run with development config
 ./data-ingestor --config config/default.yaml   
 ```
@@ -436,8 +438,10 @@ bash
 ```   
 # System health
 curl http://127.0.0.1:8080/rest/health
+
 # List running brokers
 curl http://127.0.0.1:8080/rest/brokers/list
+
 # Check specific broker
 curl -X POST http://127.0.0.1:8080/rest/brokers/status -H "Content-Type: application/json" -d '{"broker_id": "binance"}'
 ```
@@ -449,8 +453,10 @@ bash
 ```   
 # Check JetStream streams
   nats stream ls
+
 # View stream info
   nats stream info MARKET_DATA
+
 # Monitor messages
   nats consumer sub MARKET_DATA DATA_INGEST_CONSUMER
 ```
