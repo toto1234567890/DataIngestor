@@ -4,7 +4,7 @@
 
 # 🚀 Market Data Ingestor
 
-A production-grade, high-performance market data ingestion system written in Go. Connects to multiple financial exchanges simultaneously, normalizes real-time market data, and distributes it via NATS/JetStream (can be change easely) with comprehensive control through gRPC and REST APIs.
+A production-grade, high-performance market data ingestion system written in Go. Connects to multiple financial exchanges simultaneously, normalizes real-time market data, and distributes it via NATS/JetStream (can be change easely) with comprehensive control through gRPC/Protocol Buffers and REST APIs.
 
 ## ✨ Key Features
 
