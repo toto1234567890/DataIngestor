@@ -377,9 +377,6 @@ bash
 ```   
 # Install dependencies  go mod download
 
-# Run tests
-go test ./...
-
 # Build
 go build -o data-ingestor ./src/main.go
 
