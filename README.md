@@ -483,7 +483,7 @@ bash
     
 *   Data aggregation and OHLCV generation
 
-*   Plug multiple realtime data analysis service to nats-server
+*   Plug multiple realtime data analysis service to nats-server (most exiting parts comming soon I hope)
     
 *   Database integration (TimescaleDB, ClickHouse)
     
